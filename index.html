@@ -180,57 +180,6 @@
         <span class="font-korean text-lg sm:text-xl text-pink-500 bg-pink-50 border-2 border-pink-200 px-4 py-1 rounded-full">
           한국어로 자기소개해요! ✨
         </span>
-
-        <!-- Native Korean Voice Speed & Status Bar -->
-        <div class="inline-flex flex-wrap items-center justify-center bg-white border-2 border-amber-300 rounded-full p-1 shadow-sm gap-1" title="Choose Korean teacher speaking speed">
-          <span id="activeVoicePill" class="text-xs font-extrabold text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-full">
-            🗣️ Voice: Korean (ko-KR)
-          </span>
-          <button id="speedSlowBtn" type="button" onclick="setVoiceSpeed(0.75)"
-            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950">
-            🐢 Slow
-          </button>
-          <button id="speedNormalBtn" type="button" onclick="setVoiceSpeed(0.95)"
-            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800">
-            🐰 Normal
-          </button>
-          <button id="voiceSettingsToggleBtn" type="button" onclick="toggleVoiceSettingsPanel()"
-            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200"
-            title="Optional Google Cloud TTS API Key settings">
-            🔑 Voice Settings
-          </button>
-        </div>
-      </div>
-
-      <!-- Optional Collapsible Teacher Voice Settings (Google Cloud ko-KR-Standard-A) -->
-      <div id="voiceSettingsPanel" class="hidden max-w-xl mx-auto mt-3 bg-white/95 border-2 border-sky-300 rounded-2xl p-3.5 shadow-md text-left animate-pop">
-        <div class="flex items-center justify-between mb-1.5">
-          <span class="font-display font-bold text-xs sm:text-sm text-sky-800">
-            🎙️ Korean Voice Engine (<span class="font-korean">Google 한국의 / ko-KR-Standard-A</span>)
-          </span>
-          <span id="voiceModeBadge" class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
-            ✅ Browser Korean Voice Active
-          </span>
-        </div>
-        <p class="text-xs text-slate-500 font-semibold mb-2">
-          Uses your browser's native Korean voice (<span class="font-korean">Google 한국의</span>) automatically with <strong>no API key</strong>! Optionally paste a Google Cloud Text-to-Speech API key below to use <code class="bg-slate-100 px-1 rounded">ko-KR-Standard-A</code> via inline base64 MP3:
-        </p>
-        <div class="flex flex-col sm:flex-row gap-2">
-          <input
-            id="googleTtsApiKeyInput"
-            type="password"
-            placeholder="Optional: AIzaSy... (Google Cloud TTS API Key)"
-            class="flex-1 text-xs font-semibold bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-skyBubble"
-          />
-          <div class="flex gap-1.5">
-            <button type="button" onclick="saveGoogleTtsApiKey()" class="bg-skyBubble hover:bg-skyDark text-white font-display font-bold text-xs px-3.5 py-2 rounded-xl transition">
-              Save Key
-            </button>
-            <button type="button" onclick="clearGoogleTtsApiKey()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-display font-bold text-xs px-3 py-2 rounded-xl transition">
-              Clear
-            </button>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -659,6 +608,12 @@
 
   <script>
     /* =========================================================================
+       🔑 TEACHER CONFIGURATION: ADD YOUR GOOGLE CLOUD TTS API KEY HERE
+       ========================================================================= */
+    const GOOGLE_CLOUD_TTS_API_KEY = "AIzaSyD27v_Ebmns3EM2q_q9d9m_34rE2dSMq1c";
+    // =========================================================================
+
+    /* =========================================================================
        1. COUNTRY DATA (22 Countries with English, Korean, Romanization & Flag Colors)
        ========================================================================= */
     const COUNTRIES = [
@@ -728,88 +683,20 @@
     };
 
     /* =========================================================================
-       3. SYNCHRONOUS KOREAN VOICE ENGINE (GOOGLE 한국의 + OPTIONAL CLOUD KO-KR-STANDARD-A)
+       3. SYNCHRONOUS KOREAN VOICE ENGINE (GOOGLE 한국의 + CLOUD KO-KR-STANDARD-A)
        ========================================================================= */
-    // Optional: Teachers can paste a Google Cloud TTS API key here so all students
-    // automatically use ko-KR-Standard-A via inline base64 MP3 without setup:
-    const GOOGLE_CLOUD_TTS_API_KEY = "";
-
-    const TTS_STORAGE_KEY = "korean_intro_gcloud_tts_key";
     const cloudTtsAudioCache = new Map();
     let activeHtmlAudio = null;
     let selectedKoreanVoice = null;
-    let voiceRate = 0.75; // Default beginner-friendly slow/clear speed
+    const voiceRate = 0.85; // Natural clear teacher speaking speed
     let activePulseTimer = null;
 
     function getActiveGoogleCloudApiKey() {
-      if (GOOGLE_CLOUD_TTS_API_KEY && GOOGLE_CLOUD_TTS_API_KEY.trim()) {
-        return GOOGLE_CLOUD_TTS_API_KEY.trim();
-      }
-      try {
-        return (localStorage.getItem(TTS_STORAGE_KEY) || "").trim();
-      } catch (e) {
+      const key = (GOOGLE_CLOUD_TTS_API_KEY || "").trim();
+      if (!key || key === "PASTE_YOUR_API_KEY_HERE" || key === "YOUR_GOOGLE_CLOUD_TTS_API_KEY_HERE") {
         return "";
       }
-    }
-
-    function updateVoiceModeIndicator() {
-      const badge = document.getElementById("voiceModeBadge");
-      const pill = document.getElementById("activeVoicePill");
-      const input = document.getElementById("googleTtsApiKeyInput");
-      const key = getActiveGoogleCloudApiKey();
-
-      if (input && !input.value && key) {
-        input.value = key;
-      }
-
-      if (key) {
-        if (badge) {
-          badge.textContent = "⭐ Google Cloud ko-KR-Standard-A Active";
-          badge.className = "text-[11px] font-extrabold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full";
-        }
-        if (pill) {
-          pill.textContent = "🗣️ Voice: ko-KR-Standard-A";
-        }
-      } else {
-        const voiceLabel = selectedKoreanVoice ? selectedKoreanVoice.name : "Korean (ko-KR)";
-        if (badge) {
-          badge.textContent = `✅ Active: ${voiceLabel}`;
-          badge.className = "text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full";
-        }
-        if (pill) {
-          pill.textContent = `🗣️ Voice: ${voiceLabel}`;
-        }
-      }
-    }
-
-    function toggleVoiceSettingsPanel() {
-      const panel = document.getElementById("voiceSettingsPanel");
-      panel.classList.toggle("hidden");
-      loadKoreanVoices();
-      updateVoiceModeIndicator();
-    }
-
-    function saveGoogleTtsApiKey() {
-      const input = document.getElementById("googleTtsApiKeyInput");
-      const val = (input.value || "").trim();
-      try {
-        localStorage.setItem(TTS_STORAGE_KEY, val);
-      } catch (e) {}
-      cloudTtsAudioCache.clear();
-      updateVoiceModeIndicator();
-      showToast(val ? "🔑 Google Cloud ko-KR-Standard-A key saved!" : "✅ Using browser Korean voice!");
-    }
-
-    function clearGoogleTtsApiKey() {
-      const input = document.getElementById("googleTtsApiKeyInput");
-      input.value = "";
-      try {
-        localStorage.removeItem(TTS_STORAGE_KEY);
-      } catch (e) {}
-      cloudTtsAudioCache.clear();
-      loadKoreanVoices();
-      updateVoiceModeIndicator();
-      showToast("🧹 API key cleared. Using browser Korean voice!");
+      return key;
     }
 
     function loadKoreanVoices() {
@@ -831,7 +718,6 @@
 
         if (googleKorean) {
           selectedKoreanVoice = googleKorean;
-          updateVoiceModeIndicator();
           return;
         }
 
@@ -845,27 +731,12 @@
           return (aScore === -1 ? 99 : aScore) - (bScore === -1 ? 99 : bScore);
         });
         selectedKoreanVoice = koVoices[0];
-        updateVoiceModeIndicator();
       }
     }
 
     if ("speechSynthesis" in window) {
       loadKoreanVoices();
       window.speechSynthesis.onvoiceschanged = loadKoreanVoices;
-    }
-
-    function setVoiceSpeed(rate) {
-      voiceRate = rate;
-      const slowBtn = document.getElementById("speedSlowBtn");
-      const normalBtn = document.getElementById("speedNormalBtn");
-      if (rate < 0.85) {
-        slowBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950";
-        normalBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800";
-      } else {
-        normalBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950";
-        slowBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800";
-      }
-      showToast(rate < 0.85 ? "🐢 Slow & clear teacher voice!" : "🐰 Natural speed teacher voice!");
     }
 
     function clearButtonPulse(btn) {
@@ -1919,7 +1790,6 @@
     // Initialize Application on Load
     window.addEventListener('DOMContentLoaded', () => {
       loadKoreanVoices();
-      updateVoiceModeIndicator();
       renderCountryOptions('');
       initFlagDrawingPad();
       updateAllOutputs();
@@ -1927,5 +1797,3 @@
   </script>
 </body>
 </html>
-
-
