@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Expressions - Beginning 1 | Let's introduce yourself in Korean!</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Fredoka & Nunito for cute English, Jua & Noto Sans KR for friendly readable Hangul -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'Jua', 'sans-serif'],
+            body: ['Nunito', 'Noto Sans KR', 'sans-serif'],
+            korean: ['Jua', 'Noto Sans KR', 'sans-serif'],
+            hangulGrid: ['Noto Sans KR', 'Jua', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FFFDF7',
+            strawberry: '#FF6B8B',
+            strawberryDark: '#E0486B',
+            skyBubble: '#4CC9F0',
+            skyDark: '#269BC2',
+            sunny: '#FFD166',
+            sunnyDark: '#E5AE2B',
+            mint: '#06D6A0',
+            mintDark: '#05A87D',
+            grape: '#9B5DE5',
+            grapeDark: '#783BC4',
+          },
+          boxShadow: {
+            sticker: '0 8px 0 rgba(45, 55, 72, 0.08), 0 12px 24px rgba(255, 107, 139, 0.14)',
+            btnPink: '0 4px 0 #D94566',
+            btnBlue: '0 4px 0 #2393B8',
+            btnMint: '0 4px 0 #049E76',
+            btnYellow: '0 4px 0 #D9A226',
+            btnGrape: '0 4px 0 #7339BD',
+            btnGray: '0 4px 0 #CBD5E1',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #FFF9EC;
+      background-image:
+        radial-gradient(#FFD6E0 2.5px, transparent 2.5px),
+        radial-gradient(#BDE0FE 2.5px, #FFF9EC 2.5px);
+      background-size: 48px 48px;
+      background-position: 0 0, 24px 24px;
+      overflow-x: hidden;
+    }
+
+    /* Tactile 3D Bouncy Buttons */
+    .btn-3d {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+    }
+    .btn-3d:hover {
+      transform: translateY(-2px);
+    }
+    .btn-3d:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15) !important;
+    }
+
+    /* Floating Cute Background Elements */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(4deg); }
+    }
+    @keyframes floatReverse {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(9px) rotate(-4deg); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      70% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(255, 107, 139, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 107, 139, 0); }
+    }
+
+    .animate-float { animation: floatSlow 5s ease-in-out infinite; }
+    .animate-float-rev { animation: floatReverse 6s ease-in-out infinite; }
+    .animate-pop { animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .speaking-pulse {
+      animation: pulseRing 1s infinite !important;
+      background-color: #FF6B8B !important;
+      color: white !important;
+    }
+
+    /* Custom Scrollbar for Country Dropdown */
+    .cute-scroll::-webkit-scrollbar {
+      width: 10px;
+    }
+    .cute-scroll::-webkit-scrollbar-track {
+      background: #FFF0F3;
+      border-radius: 999px;
+    }
+    .cute-scroll::-webkit-scrollbar-thumb {
+      background: #FF8FA3;
+      border-radius: 999px;
+      border: 2px solid #FFF0F3;
+    }
+
+    /* Prevent touch scrolling while drawing on canvases */
+    canvas.drawing-surface {
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    /* Confetti particle */
+    .confetti-piece {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 1.5rem;
+      animation: confettiFall 1.6s ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="font-body text-slate-700 min-h-screen pb-16 selection:bg-pink-200 selection:text-pink-900">
+
+  <!-- Decorative Floating Clouds & Stars -->
+  <div aria-hidden="true" class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute top-6 left-4 sm:left-10 text-4xl sm:text-5xl opacity-75 animate-float">☁️</div>
+    <div class="absolute top-20 right-6 sm:right-14 text-3xl sm:text-5xl opacity-75 animate-float-rev">⭐</div>
+    <div class="absolute bottom-24 left-6 text-4xl opacity-65 animate-float-rev">🌈</div>
+    <div class="absolute bottom-14 right-8 text-4xl opacity-70 animate-float">✨</div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 pt-5 sm:pt-8">
+
+    <!-- ==================== HEADER SECTION ==================== -->
+    <header class="text-center mb-6 sm:mb-8">
+      <!-- Top Small Course Tag -->
+      <div class="inline-flex items-center gap-2 bg-white/95 border-2 border-sky-300 text-sky-600 font-display font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full shadow-sm mb-3">
+        <span>🇰🇷</span>
+        <span>Daily Expressions - Beginning 1</span>
+        <span>🎒</span>
+      </div>
+
+      <!-- Big Playful Main Title -->
+      <div class="flex items-center justify-center gap-2 sm:gap-4">
+        <span class="hidden sm:inline-block text-4xl animate-float">🐰</span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl md:text-[3.25rem] leading-tight text-slate-800 tracking-tight drop-shadow-sm">
+          <span class="bg-gradient-to-r from-strawberry via-grape to-skyBubble bg-clip-text text-transparent">
+            Let's introduce yourself in Korean!
+          </span>
+        </h1>
+        <span class="hidden sm:inline-block text-4xl animate-float-rev">🐻</span>
+      </div>
+
+      <!-- Korean Subtitle & Speed Toggle Bar -->
+      <div class="mt-3 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <span class="font-korean text-lg sm:text-xl text-pink-500 bg-pink-50 border-2 border-pink-200 px-4 py-1 rounded-full">
+          한국어로 자기소개해요! ✨
+        </span>
+
+        <!-- Native Korean Voice Speed & Status Bar -->
+        <div class="inline-flex flex-wrap items-center justify-center bg-white border-2 border-amber-300 rounded-full p-1 shadow-sm gap-1" title="Choose Korean teacher speaking speed">
+          <span id="activeVoicePill" class="text-xs font-extrabold text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-full">
+            🗣️ Voice: Korean (ko-KR)
+          </span>
+          <button id="speedSlowBtn" type="button" onclick="setVoiceSpeed(0.75)"
+            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950">
+            🐢 Slow
+          </button>
+          <button id="speedNormalBtn" type="button" onclick="setVoiceSpeed(0.95)"
+            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800">
+            🐰 Normal
+          </button>
+          <button id="voiceSettingsToggleBtn" type="button" onclick="toggleVoiceSettingsPanel()"
+            class="px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200"
+            title="Optional Google Cloud TTS API Key settings">
+            🔑 Voice Settings
+          </button>
+        </div>
+      </div>
+
+      <!-- Optional Collapsible Teacher Voice Settings (Google Cloud ko-KR-Standard-A) -->
+      <div id="voiceSettingsPanel" class="hidden max-w-xl mx-auto mt-3 bg-white/95 border-2 border-sky-300 rounded-2xl p-3.5 shadow-md text-left animate-pop">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="font-display font-bold text-xs sm:text-sm text-sky-800">
+            🎙️ Korean Voice Engine (<span class="font-korean">Google 한국의 / ko-KR-Standard-A</span>)
+          </span>
+          <span id="voiceModeBadge" class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+            ✅ Browser Korean Voice Active
+          </span>
+        </div>
+        <p class="text-xs text-slate-500 font-semibold mb-2">
+          Uses your browser's native Korean voice (<span class="font-korean">Google 한국의</span>) automatically with <strong>no API key</strong>! Optionally paste a Google Cloud Text-to-Speech API key below to use <code class="bg-slate-100 px-1 rounded">ko-KR-Standard-A</code> via inline base64 MP3:
+        </p>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input
+            id="googleTtsApiKeyInput"
+            type="password"
+            placeholder="Optional: AIzaSy... (Google Cloud TTS API Key)"
+            class="flex-1 text-xs font-semibold bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-skyBubble"
+          />
+          <div class="flex gap-1.5">
+            <button type="button" onclick="saveGoogleTtsApiKey()" class="bg-skyBubble hover:bg-skyDark text-white font-display font-bold text-xs px-3.5 py-2 rounded-xl transition">
+              Save Key
+            </button>
+            <button type="button" onclick="clearGoogleTtsApiKey()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-display font-bold text-xs px-3 py-2 rounded-xl transition">
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== STEP 1: STUDENT INPUT CARD ==================== -->
+    <section class="bg-white rounded-[2rem] border-4 border-amber-300 shadow-sticker p-5 sm:p-7 mb-7 relative">
+      <!-- Cute Corner Sticker Badge -->
+      <div class="absolute -top-4 left-6 bg-sunny text-amber-950 font-display font-bold text-sm sm:text-base px-4 py-1 rounded-full border-2 border-amber-400 shadow-sm flex items-center gap-1.5">
+        <span>✏️</span>
+        <span>Step 1: Tell us about you!</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mt-2">
+        <!-- Name Input Column -->
+        <div>
+          <label for="studentNameInput" class="block font-display font-semibold text-base sm:text-lg text-slate-700 mb-2">
+            1. What is your name? <span class="text-pink-500 text-sm font-korean">(이름)</span>
+          </label>
+          <div class="relative">
+            <input
+              id="studentNameInput"
+              type="text"
+              value="Emma"
+              maxlength="24"
+              placeholder="Type in English or Korean (e.g., Emma, 지수)..."
+              class="w-full font-display text-lg sm:text-xl text-slate-800 bg-amber-50/70 border-3 border-2 border-amber-300 focus:border-strawberry focus:bg-white focus:outline-none rounded-2xl px-4 py-3.5 pr-11 transition"
+            />
+            <button
+              type="button"
+              onclick="clearNameInput()"
+              title="Clear name"
+              class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-amber-200/80 hover:bg-pink-200 text-slate-600 hover:text-pink-700 flex items-center justify-center font-bold text-sm transition">
+              ✕
+            </button>
+          </div>
+
+          <!-- Quick Kid-Friendly Sample Name Chips -->
+          <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+            <span class="text-xs font-bold text-slate-400 mr-1">Try:</span>
+            <button type="button" onclick="setSampleName('Emma')" class="text-xs font-bold bg-pink-100 hover:bg-pink-200 text-pink-700 px-2.5 py-1 rounded-full transition">Emma</button>
+            <button type="button" onclick="setSampleName('Liam')" class="text-xs font-bold bg-sky-100 hover:bg-sky-200 text-sky-700 px-2.5 py-1 rounded-full transition">Liam</button>
+            <button type="button" onclick="setSampleName('Minh')" class="text-xs font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-700 px-2.5 py-1 rounded-full transition">Minh</button>
+            <button type="button" onclick="setSampleName('Sakura')" class="text-xs font-bold bg-purple-100 hover:bg-purple-200 text-purple-700 px-2.5 py-1 rounded-full transition">Sakura</button>
+            <button type="button" onclick="setSampleName('지수')" class="text-xs font-korean bg-amber-100 hover:bg-amber-200 text-amber-800 px-2.5 py-1 rounded-full transition">지수</button>
+          </div>
+        </div>
+
+        <!-- Nationality Custom Rich Dropdown Column -->
+        <div class="relative" id="countryDropdownWrapper">
+          <label class="block font-display font-semibold text-base sm:text-lg text-slate-700 mb-2">
+            2. Where are you from? <span class="text-sky-500 text-sm font-korean">(나라 / 국적)</span>
+          </label>
+
+          <!-- Selected Country Trigger Button -->
+          <button
+            id="countryDropdownBtn"
+            type="button"
+            onclick="toggleCountryDropdown()"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            class="w-full flex items-center justify-between bg-sky-50/80 hover:bg-sky-50 border-2 border-sky-300 focus:border-skyBubble focus:outline-none rounded-2xl px-4 py-3 text-left transition">
+            <div class="flex items-center gap-3 min-w-0">
+              <img id="selectedFlagImg" src="https://flagcdn.com/w80/us.png" alt="Flag" class="w-8 h-6 object-cover rounded shadow-sm border border-slate-200 shrink-0" />
+              <div class="truncate">
+                <span id="selectedCountryEn" class="font-display font-semibold text-base sm:text-lg text-slate-800">United States</span>
+                <span class="mx-1.5 text-slate-300">•</span>
+                <span id="selectedCountryKo" class="font-korean text-base sm:text-lg text-sky-600">미국</span>
+              </div>
+            </div>
+            <span id="dropdownChevron" class="text-sky-500 font-bold text-lg ml-2 transition-transform duration-200">▼</span>
+          </button>
+
+          <!-- Custom Dropdown Menu Panel -->
+          <div
+            id="countryDropdownMenu"
+            class="hidden absolute left-0 right-0 mt-2 bg-white border-3 border-2 border-sky-300 rounded-2xl shadow-2xl z-50 overflow-hidden animate-pop">
+            <!-- Search filter inside dropdown -->
+            <div class="p-2.5 bg-sky-50 border-b border-sky-100">
+              <input
+                id="countrySearchInput"
+                type="text"
+                placeholder="🔍 Search country in English or 한국어..."
+                oninput="filterCountries(this.value)"
+                class="w-full bg-white border border-sky-200 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 focus:outline-none focus:border-skyBubble"
+              />
+            </div>
+            <!-- Scrollable List of 22 Countries -->
+            <ul id="countryOptionsList" role="listbox" class="max-h-64 overflow-y-auto cute-scroll divide-y divide-slate-100">
+              <!-- Populated dynamically by JS -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUTPUT PART 1: KOREAN SELF-INTRODUCTION SENTENCES ==================== -->
+    <section class="bg-white rounded-[2rem] border-4 border-pink-300 shadow-sticker p-5 sm:p-7 mb-7 relative">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <div class="inline-flex items-center gap-2 bg-pink-100 text-pink-700 font-display font-bold text-sm sm:text-base px-4 py-1.5 rounded-full border-2 border-pink-200">
+          <span>💬</span>
+          <span>1. Your Korean Introduction Sentences</span>
+        </div>
+
+        <!-- Listen to All Button -->
+        <button
+          id="listenAllBtn"
+          type="button"
+          onclick="speakAllSentences()"
+          class="btn-3d inline-flex items-center gap-2 bg-strawberry hover:bg-strawberryDark text-white font-display font-semibold text-sm sm:text-base px-4 py-2 rounded-full shadow-btnPink">
+          <span class="text-lg">🎧</span>
+          <span>Listen to Both!</span>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Sentence 1: Name + 이에요/예요 -->
+        <div class="bg-gradient-to-r from-pink-50/90 to-amber-50/70 border-2 border-pink-200 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider bg-pink-200/80 text-pink-800 px-2.5 py-0.5 rounded-full">
+                Sentence 1 • Name
+              </span>
+              <span id="particleRuleBadge" class="text-xs font-bold bg-white text-purple-700 border border-purple-200 px-2.5 py-0.5 rounded-full">
+                Ends with a vowel → 예요!
+              </span>
+            </div>
+
+            <!-- Big Korean Sentence 1 -->
+            <p id="sentence1Korean" class="font-korean text-2xl sm:text-4xl text-slate-800 leading-snug tracking-wide">
+              저는 <span class="text-pink-600 underline decoration-wavy decoration-pink-300 underline-offset-4">엠마</span><span class="text-purple-600">예요</span>.
+            </p>
+
+            <!-- Romanization + English Translation -->
+            <p id="sentence1Sub" class="text-sm sm:text-base font-bold text-slate-500">
+              <span class="text-pink-600">Jeoneun Emma-yeyo.</span> — "I am Emma."
+            </p>
+          </div>
+
+          <!-- Listen Button for Sentence 1 -->
+          <button
+            id="listenSentence1Btn"
+            type="button"
+            onclick="speakSentence1()"
+            aria-label="Listen to sentence 1"
+            class="btn-3d self-start sm:self-center shrink-0 inline-flex items-center gap-2 bg-skyBubble hover:bg-skyDark text-white font-display font-bold text-base sm:text-lg px-5 py-3 rounded-2xl shadow-btnBlue">
+            <span class="text-xl">🔊</span>
+            <span>Listen</span>
+          </button>
+        </div>
+
+        <!-- Sentence 2: Country + 사람이에요 -->
+        <div class="bg-gradient-to-r from-sky-50/90 to-emerald-50/70 border-2 border-sky-200 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider bg-sky-200/80 text-sky-800 px-2.5 py-0.5 rounded-full">
+                Sentence 2 • Nationality
+              </span>
+              <span class="text-xs font-bold bg-white text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                사람이에요 = am a person from...
+              </span>
+            </div>
+
+            <!-- Big Korean Sentence 2 -->
+            <p id="sentence2Korean" class="font-korean text-2xl sm:text-4xl text-slate-800 leading-snug tracking-wide">
+              저는 <span class="text-sky-600 underline decoration-wavy decoration-sky-300 underline-offset-4">미국</span> 사람이에요.
+            </p>
+
+            <!-- Romanization + English Translation -->
+            <p id="sentence2Sub" class="text-sm sm:text-base font-bold text-slate-500">
+              <span class="text-sky-600">Jeoneun Miguk saram-ieyo.</span> — "I am American (from United States)."
+            </p>
+          </div>
+
+          <!-- Listen Button for Sentence 2 -->
+          <button
+            id="listenSentence2Btn"
+            type="button"
+            onclick="speakSentence2()"
+            aria-label="Listen to sentence 2"
+            class="btn-3d self-start sm:self-center shrink-0 inline-flex items-center gap-2 bg-mint hover:bg-mintDark text-white font-display font-bold text-base sm:text-lg px-5 py-3 rounded-2xl shadow-btnMint">
+            <span class="text-xl">🔊</span>
+            <span>Listen</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUTPUT PART 2: KOREAN NAME & HANGUL TRACING PAD ==================== -->
+    <section class="bg-white rounded-[2rem] border-4 border-purple-300 shadow-sticker p-5 sm:p-7 mb-7 relative">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-purple-100 text-purple-700 font-display font-bold text-sm sm:text-base px-4 py-1.5 rounded-full border-2 border-purple-200">
+            <span>✍️</span>
+            <span>2. Your Name in Korean & Hangul Tracing Pad</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-400 mt-1.5 ml-1">
+            Written using Korean Loanword Rules (<span class="font-korean text-purple-500">외래어 표기법</span>). Trace each syllable box!
+          </p>
+        </div>
+
+        <!-- Korean Name Display + Listen Button -->
+        <div class="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 px-4 py-2.5 rounded-2xl">
+          <div>
+            <span class="block text-[11px] font-extrabold uppercase tracking-wider text-purple-400">Your Korean Name</span>
+            <div class="flex items-center gap-2">
+              <span id="koreanNameDisplay" class="font-korean text-3xl sm:text-4xl text-purple-700">엠마</span>
+              <button
+                type="button"
+                onclick="toggleManualKoreanEdit()"
+                title="Customize Korean spelling"
+                class="text-xs bg-white hover:bg-purple-100 text-purple-600 border border-purple-200 px-2 py-1 rounded-lg font-bold transition">
+                ✏️ Edit
+              </button>
+            </div>
+          </div>
+
+          <button
+            id="listenNameBtn"
+            type="button"
+            onclick="speakKoreanName()"
+            aria-label="Listen to Korean name"
+            class="btn-3d inline-flex items-center gap-1.5 bg-grape hover:bg-grapeDark text-white font-display font-bold text-sm sm:text-base px-4 py-2.5 rounded-xl shadow-btnGrape">
+            <span class="text-lg">🔊</span>
+            <span>Listen</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Optional Manual Korean Spelling Override Box (Hidden by default) -->
+      <div id="manualKoreanEditBox" class="hidden mb-4 bg-purple-50/70 border-2 border-dashed border-purple-300 rounded-2xl p-3 flex flex-wrap items-center gap-2">
+        <span class="text-xs font-bold text-purple-800">Fine-tune Korean Hangul spelling:</span>
+        <input
+          id="manualKoreanInput"
+          type="text"
+          maxlength="12"
+          oninput="applyManualKoreanName(this.value)"
+          class="font-korean text-lg bg-white border-2 border-purple-300 rounded-xl px-3 py-1 text-purple-900 focus:outline-none focus:border-grape"
+        />
+        <button type="button" onclick="resetAutoKoreanName()" class="text-xs font-bold bg-white hover:bg-purple-100 text-purple-700 border border-purple-300 px-3 py-1.5 rounded-xl">
+          Reset Auto (<span class="font-korean">외래어 표기법</span>)
+        </button>
+      </div>
+
+      <!-- Hangul Grid Tracing Pad Area -->
+      <div class="bg-[#FFFDF5] border-2 border-dashed border-amber-300 rounded-3xl p-4 sm:p-6">
+        <!-- Crayon Color & Brush Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-amber-200/80">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs sm:text-sm font-display font-bold text-slate-600 mr-1">🖍️ Crayon:</span>
+            <button type="button" onclick="setTraceColor('#FF4D6D', this)" class="trace-swatch w-8 h-8 rounded-full bg-[#FF4D6D] ring-4 ring-pink-200 scale-110 transition" title="Strawberry Pink"></button>
+            <button type="button" onclick="setTraceColor('#3A86FF', this)" class="trace-swatch w-8 h-8 rounded-full bg-[#3A86FF] hover:scale-105 transition" title="Ocean Blue"></button>
+            <button type="button" onclick="setTraceColor('#8338EC', this)" class="trace-swatch w-8 h-8 rounded-full bg-[#8338EC] hover:scale-105 transition" title="Grape Purple"></button>
+            <button type="button" onclick="setTraceColor('#06D6A0', this)" class="trace-swatch w-8 h-8 rounded-full bg-[#06D6A0] hover:scale-105 transition" title="Mint Green"></button>
+            <button type="button" onclick="setTraceColor('#2B2D42', this)" class="trace-swatch w-8 h-8 rounded-full bg-[#2B2D42] hover:scale-105 transition" title="Charcoal Black"></button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              onclick="clearAllHangulGrids()"
+              class="btn-3d bg-slate-100 hover:bg-slate-200 text-slate-700 font-display font-semibold text-xs sm:text-sm px-3.5 py-2 rounded-xl shadow-btnGray">
+              🧹 Clear Grid
+            </button>
+            <button
+              type="button"
+              onclick="celebrateTracing(event)"
+              class="btn-3d bg-sunny hover:bg-sunnyDark text-amber-950 font-display font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shadow-btnYellow">
+              🌟 All Done!
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Syllable Tracing Squares Container -->
+        <div id="hangulGridContainer" class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 py-2">
+          <!-- Canvases generated dynamically per Hangul character -->
+        </div>
+
+        <p class="text-center text-xs font-bold text-slate-400 mt-3">
+          💡 Tip: Follow the dotted crosshairs (<span class="text-pink-400">+</span>) from top to bottom, left to right!
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== OUTPUT PART 3: COUNTRY FLAG & FREE DRAWING PAD ==================== -->
+    <section class="bg-white rounded-[2rem] border-4 border-emerald-300 shadow-sticker p-5 sm:p-7 relative">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-display font-bold text-sm sm:text-base px-4 py-1.5 rounded-full border-2 border-emerald-200">
+          <span>🎨</span>
+          <span>3. Your Country Flag & Free Drawing Pad</span>
+        </div>
+
+        <!-- Country Korean Name + Listen Button -->
+        <div class="flex items-center gap-3 bg-emerald-50 border-2 border-emerald-200 px-4 py-2 rounded-2xl">
+          <span id="flagSectionEmoji" class="text-2xl">🇺🇸</span>
+          <div>
+            <span id="flagSectionEn" class="block text-[11px] font-extrabold uppercase tracking-wider text-emerald-600">United States</span>
+            <span id="flagSectionKo" class="font-korean text-2xl sm:text-3xl text-emerald-800">미국</span>
+          </div>
+          <button
+            id="listenCountryBtn"
+            type="button"
+            onclick="speakCountryName()"
+            aria-label="Listen to country name in Korean"
+            class="btn-3d inline-flex items-center gap-1.5 bg-mint hover:bg-mintDark text-white font-display font-bold text-sm sm:text-base px-4 py-2.5 rounded-xl shadow-btnMint">
+            <span class="text-lg">🔊</span>
+            <span>Listen</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout: Reference Flag Sticker vs. Free Drawing Canvas -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left: Reference Flag Card (5 cols) -->
+        <div class="lg:col-span-5 bg-gradient-to-b from-sky-50 to-emerald-50/60 border-2 border-emerald-200 rounded-3xl p-4 sm:p-5 text-center">
+          <span class="inline-block bg-white text-emerald-700 font-display font-bold text-xs sm:text-sm px-3.5 py-1 rounded-full border border-emerald-200 mb-3">
+            👀 Look & Observe Flag
+          </span>
+
+          <!-- Polaroid Flag Frame -->
+          <div class="bg-white p-3 rounded-2xl shadow-md border-2 border-slate-100 mx-auto max-w-[300px]">
+            <div class="relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 flex items-center justify-center">
+              <img
+                id="referenceFlagImage"
+                src="https://flagcdn.com/w320/us.png"
+                alt="Country Flag"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'; document.getElementById('referenceFlagFallback').style.display='flex';"
+              />
+              <div id="referenceFlagFallback" class="hidden w-full h-full items-center justify-center text-7xl">
+                🇺🇸
+              </div>
+            </div>
+            <p id="polaroidCaption" class="font-korean text-lg text-slate-700 mt-2.5">
+              🇺🇸 미국 (United States)
+            </p>
+          </div>
+
+          <!-- Suggested Flag Colors Helper -->
+          <div class="mt-4">
+            <p class="text-xs font-bold text-slate-500 mb-2">✨ Colors in this flag (click to pick!):</p>
+            <div id="suggestedFlagColors" class="flex flex-wrap items-center justify-center gap-2">
+              <!-- Populated dynamically per country -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Flag Drawing Pad (7 cols) -->
+        <div class="lg:col-span-7 bg-[#F8FAFC] border-2 border-slate-200 rounded-3xl p-4 sm:p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <span class="font-display font-bold text-sm sm:text-base text-slate-700">
+              🖌️ Draw Your Flag Here!
+            </span>
+
+            <!-- Faint Tracing Guide Toggle -->
+            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border border-slate-200 px-3 py-1 rounded-full text-xs font-bold text-slate-600 select-none">
+              <input id="flagGhostToggle" type="checkbox" onchange="toggleFlagGhostGuide()" class="accent-mint w-4 h-4 rounded" />
+              <span>👻 Faint Flag Guide</span>
+            </label>
+          </div>
+
+          <!-- Flag Drawing Canvas Container (3:2 aspect ratio) -->
+          <div id="flagCanvasWrapper" class="relative w-full aspect-[3/2] bg-white rounded-2xl border-3 border-2 border-slate-300 shadow-inner overflow-hidden">
+            <!-- Optional Ghost Guide Overlay (pointer-events-none so drawing passes straight through!) -->
+            <img
+              id="flagGhostOverlay"
+              src="https://flagcdn.com/w320/us.png"
+              alt=""
+              aria-hidden="true"
+              class="hidden absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-10"
+            />
+            <canvas id="flagDrawingCanvas" class="drawing-surface w-full h-full block relative z-0"></canvas>
+          </div>
+
+          <!-- Art Palette & Tools -->
+          <div class="mt-3.5 space-y-3">
+            <!-- Color Palette Row -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <button type="button" onclick="setFlagColor('#EF233C', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#EF233C] ring-4 ring-slate-300 scale-110 transition" title="Red"></button>
+              <button type="button" onclick="setFlagColor('#1D4ED8', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D4ED8] border border-slate-300 transition" title="Royal Blue"></button>
+              <button type="button" onclick="setFlagColor('#0F172A', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0F172A] transition" title="Navy / Black"></button>
+              <button type="button" onclick="setFlagColor('#FACC15', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FACC15] border border-amber-300 transition" title="Yellow"></button>
+              <button type="button" onclick="setFlagColor('#16A34A', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#16A34A] transition" title="Green"></button>
+              <button type="button" onclick="setFlagColor('#F97316', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F97316] transition" title="Orange"></button>
+              <button type="button" onclick="setFlagColor('#38BDF8', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#38BDF8] transition" title="Sky Blue"></button>
+              <button type="button" onclick="setFlagColor('#FFFFFF', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-slate-300 transition" title="White"></button>
+              <button type="button" onclick="setFlagColor('#8B5CF6', this)" class="flag-swatch w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#8B5CF6] transition" title="Purple"></button>
+            </div>
+
+            <!-- Brush Tools & Action Buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button id="toolBrushBtn" type="button" onclick="setFlagTool('brush')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-500 text-white shadow-sm transition">
+                  ✏️ Pen
+                </button>
+                <button id="toolMarkerBtn" type="button" onclick="setFlagTool('marker')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+                  🖍️ Thick
+                </button>
+                <button id="toolFillBtn" type="button" onclick="setFlagTool('fill')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+                  🪣 Fill
+                </button>
+                <button id="toolEraserBtn" type="button" onclick="setFlagTool('eraser')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+                  🧼 Eraser
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="clearFlagCanvas()" class="btn-3d bg-slate-200 hover:bg-slate-300 text-slate-700 font-display font-bold text-xs px-3 py-2 rounded-xl">
+                  🗑️ Clear
+                </button>
+                <button type="button" onclick="downloadFlagArt(event)" class="btn-3d bg-mint hover:bg-mintDark text-white font-display font-bold text-xs px-3.5 py-2 rounded-xl shadow-btnMint">
+                  🖼️ Save Flag
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cute Toast Notification Banner (No alert() used!) -->
+    <div id="cuteToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white font-display text-sm sm:text-base px-5 py-3 rounded-full shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center gap-2">
+      <span id="cuteToastIcon">🎉</span>
+      <span id="cuteToastText">Great job!</span>
+    </div>
+
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. COUNTRY DATA (22 Countries with English, Korean, Romanization & Flag Colors)
+       ========================================================================= */
+    const COUNTRIES = [
+      { en: 'United States', ko: '미국', rom: 'Miguk', iso: 'us', emoji: '🇺🇸', colors: ['#B22234', '#FFFFFF', '#3C3B6E'] },
+      { en: 'Vietnam', ko: '베트남', rom: 'Beteunam', iso: 'vn', emoji: '🇻🇳', colors: ['#DA251D', '#FFFF00'] },
+      { en: 'Thailand', ko: '태국', rom: 'Taeguk', iso: 'th', emoji: '🇹🇭', colors: ['#A51931', '#FFFFFF', '#2D2A4A'] },
+      { en: 'Japan', ko: '일본', rom: 'Ilbon', iso: 'jp', emoji: '🇯🇵', colors: ['#FFFFFF', '#BC002D'] },
+      { en: 'China', ko: '중국', rom: 'Jungguk', iso: 'cn', emoji: '🇨🇳', colors: ['#EE1C25', '#FFFF00'] },
+      { en: 'India', ko: '인도', rom: 'Indo', iso: 'in', emoji: '🇮🇳', colors: ['#FF9933', '#FFFFFF', '#138808', '#000080'] },
+      { en: 'Russia', ko: '러시아', rom: 'Reosia', iso: 'ru', emoji: '🇷🇺', colors: ['#FFFFFF', '#0039A6', '#D52B1E'] },
+      { en: 'Uzbekistan', ko: '우즈베키스탄', rom: 'Ujeubekiseutan', iso: 'uz', emoji: '🇺🇿', colors: ['#0099B5', '#FFFFFF', '#1EB53A', '#CE1126'] },
+      { en: 'Indonesia', ko: '인도네시아', rom: 'Indonesia', iso: 'id', emoji: '🇮🇩', colors: ['#FF0000', '#FFFFFF'] },
+      { en: 'Philippines', ko: '필리핀', rom: 'Pillipin', iso: 'ph', emoji: '🇵🇭', colors: ['#0038A8', '#CE1126', '#FFFFFF', '#FCD116'] },
+      { en: 'Malaysia', ko: '말레이시아', rom: 'Malleisia', iso: 'my', emoji: '🇲🇾', colors: ['#CC0001', '#FFFFFF', '#010066', '#FFCC00'] },
+      { en: 'Mongolia', ko: '몽골', rom: 'Monggol', iso: 'mn', emoji: '🇲🇳', colors: ['#DA2032', '#0066B3', '#FFD900'] },
+      { en: 'Kazakhstan', ko: '카자흐스탄', rom: 'Kajaheuseutan', iso: 'kz', emoji: '🇰🇿', colors: ['#00AFCA', '#FEC50C'] },
+      { en: 'Taiwan', ko: '대만', rom: 'Daeman', iso: 'tw', emoji: '🇹🇼', colors: ['#FE0000', '#000095', '#FFFFFF'] },
+      { en: 'Brazil', ko: '브라질', rom: 'Beurajil', iso: 'br', emoji: '🇧🇷', colors: ['#009739', '#FEDD00', '#012169', '#FFFFFF'] },
+      { en: 'Mexico', ko: '멕시코', rom: 'Meksiko', iso: 'mx', emoji: '🇲🇽', colors: ['#006847', '#FFFFFF', '#CE1126'] },
+      { en: 'France', ko: '프랑스', rom: 'Peurangseu', iso: 'fr', emoji: '🇫🇷', colors: ['#002395', '#FFFFFF', '#ED2939'] },
+      { en: 'Germany', ko: '독일', rom: 'Dogil', iso: 'de', emoji: '🇩🇪', colors: ['#000000', '#DD0000', '#FFCE00'] },
+      { en: 'United Kingdom', ko: '영국', rom: 'Yeongguk', iso: 'gb', emoji: '🇬🇧', colors: ['#012169', '#FFFFFF', '#C8102E'] },
+      { en: 'Australia', ko: '호주', rom: 'Hoju', iso: 'au', emoji: '🇦🇺', colors: ['#00008B', '#FFFFFF', '#FF0000'] },
+      { en: 'South Korea', ko: '한국', rom: 'Hanguk', iso: 'kr', emoji: '🇰🇷', colors: ['#FFFFFF', '#CD2E3A', '#0047A0', '#000000'] },
+      { en: 'Sri Lanka', ko: '스리랑카', rom: 'Seurirangka', iso: 'lk', emoji: '🇱🇰', colors: ['#8D153A', '#FFBE29', '#00534E', '#EB7400'] }
+    ];
+
+    /* =========================================================================
+       2. KOREAN LOANWORD ORTHOGRAPHY ENGINE (외래어 표기법)
+       ========================================================================= */
+    const CHOSEONG_LIST = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+    const JUNGSEONG_LIST = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+    const JONGSEONG_LIST = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+    function composeHangul(cho, jung, jong = '') {
+      const cIdx = CHOSEONG_LIST.indexOf(cho);
+      const vIdx = JUNGSEONG_LIST.indexOf(jung);
+      const tIdx = JONGSEONG_LIST.indexOf(jong);
+      if (cIdx === -1 || vIdx === -1) return '';
+      const code = 0xAC00 + (cIdx * 21 + vIdx) * 28 + (tIdx === -1 ? 0 : tIdx);
+      return String.fromCharCode(code);
+    }
+
+    const LOANWORD_NAME_DICT = {
+      emma: '엠마', liam: '리암', noah: '노아', olivia: '올리비아', ava: '에이바',
+      sophia: '소피아', sofia: '소피아', isabella: '이사벨라', mia: '미아', charlotte: '샬럿',
+      amelia: '아멜리아', harper: '하퍼', evelyn: '에블린', abigail: '애비게일', ella: '엘라',
+      elizabeth: '엘리자베스', camila: '카밀라', luna: '루나', avery: '에이버리', scarlett: '스칼릿',
+      grace: '그레이스', chloe: '클로이', victoria: '빅토리아', riley: '라일리', aria: '아리아',
+      lily: '릴리', hannah: '해나', hana: '하나', zoe: '조이', stella: '스텔라',
+      lucy: '루시', anna: '애나', alice: '앨리스', sarah: '세라', sara: '사라',
+      claire: '클레어', maya: '마야', naomi: '나오미', elena: '엘레나', sakura: '사쿠라',
+      oliver: '올리버', elijah: '일라이자', james: '제임스', william: '윌리엄', benjamin: '벤저민',
+      lucas: '루카스', henry: '헨리', alexander: '알렉산더', alex: '알렉스', mason: '메이슨',
+      michael: '마이클', ethan: '이선', daniel: '대니얼', jacob: '제이컵', logan: '로건',
+      jackson: '잭슨', jack: '잭', owen: '오언', aiden: '에이든', samuel: '새뮤얼',
+      sam: '샘', joseph: '조지프', john: '존', david: '데이비드', matthew: '매슈',
+      luke: '루크', leo: '레오', jayden: '제이든', gabriel: '가브리엘', isaac: '아이작',
+      anthony: '앤서니', dylan: '딜런', thomas: '토머스', charles: '찰스', charlie: '찰리',
+      chris: '크리스', max: '맥스', ryan: '라이언', nathan: '네이선', kevin: '케빈',
+      justin: '저스틴', brian: '브라이언', eric: '에릭', jason: '제이슨', andrew: '앤드루',
+      joshua: '조슈아', steven: '스티븐', paul: '폴', mark: '마크', george: '조지',
+      peter: '피터', ben: '벤', tom: '톰', tim: '팀', tony: '토니',
+      minh: '민', linh: '린', trang: '짱', anh: '아인', huy: '후이',
+      arjun: '아르준', priya: '프리야', rahul: '라훌', ivan: '이반', anya: '아냐',
+      maria: '마리아', carlos: '카를로스', diego: '디에고', juan: '후안', luis: '루이스'
+    };
+
+    /* =========================================================================
+       3. SYNCHRONOUS KOREAN VOICE ENGINE (GOOGLE 한국의 + OPTIONAL CLOUD KO-KR-STANDARD-A)
+       ========================================================================= */
+    // Optional: Teachers can paste a Google Cloud TTS API key here so all students
+    // automatically use ko-KR-Standard-A via inline base64 MP3 without setup:
+    const GOOGLE_CLOUD_TTS_API_KEY = "";
+
+    const TTS_STORAGE_KEY = "korean_intro_gcloud_tts_key";
+    const cloudTtsAudioCache = new Map();
+    let activeHtmlAudio = null;
+    let selectedKoreanVoice = null;
+    let voiceRate = 0.75; // Default beginner-friendly slow/clear speed
+    let activePulseTimer = null;
+
+    function getActiveGoogleCloudApiKey() {
+      if (GOOGLE_CLOUD_TTS_API_KEY && GOOGLE_CLOUD_TTS_API_KEY.trim()) {
+        return GOOGLE_CLOUD_TTS_API_KEY.trim();
+      }
+      try {
+        return (localStorage.getItem(TTS_STORAGE_KEY) || "").trim();
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function updateVoiceModeIndicator() {
+      const badge = document.getElementById("voiceModeBadge");
+      const pill = document.getElementById("activeVoicePill");
+      const input = document.getElementById("googleTtsApiKeyInput");
+      const key = getActiveGoogleCloudApiKey();
+
+      if (input && !input.value && key) {
+        input.value = key;
+      }
+
+      if (key) {
+        if (badge) {
+          badge.textContent = "⭐ Google Cloud ko-KR-Standard-A Active";
+          badge.className = "text-[11px] font-extrabold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full";
+        }
+        if (pill) {
+          pill.textContent = "🗣️ Voice: ko-KR-Standard-A";
+        }
+      } else {
+        const voiceLabel = selectedKoreanVoice ? selectedKoreanVoice.name : "Korean (ko-KR)";
+        if (badge) {
+          badge.textContent = `✅ Active: ${voiceLabel}`;
+          badge.className = "text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full";
+        }
+        if (pill) {
+          pill.textContent = `🗣️ Voice: ${voiceLabel}`;
+        }
+      }
+    }
+
+    function toggleVoiceSettingsPanel() {
+      const panel = document.getElementById("voiceSettingsPanel");
+      panel.classList.toggle("hidden");
+      loadKoreanVoices();
+      updateVoiceModeIndicator();
+    }
+
+    function saveGoogleTtsApiKey() {
+      const input = document.getElementById("googleTtsApiKeyInput");
+      const val = (input.value || "").trim();
+      try {
+        localStorage.setItem(TTS_STORAGE_KEY, val);
+      } catch (e) {}
+      cloudTtsAudioCache.clear();
+      updateVoiceModeIndicator();
+      showToast(val ? "🔑 Google Cloud ko-KR-Standard-A key saved!" : "✅ Using browser Korean voice!");
+    }
+
+    function clearGoogleTtsApiKey() {
+      const input = document.getElementById("googleTtsApiKeyInput");
+      input.value = "";
+      try {
+        localStorage.removeItem(TTS_STORAGE_KEY);
+      } catch (e) {}
+      cloudTtsAudioCache.clear();
+      loadKoreanVoices();
+      updateVoiceModeIndicator();
+      showToast("🧹 API key cleared. Using browser Korean voice!");
+    }
+
+    function loadKoreanVoices() {
+      if (!("speechSynthesis" in window)) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || voices.length === 0) return;
+
+      const koVoices = voices.filter(
+        (v) =>
+          (v.lang && v.lang.toLowerCase().includes("ko")) ||
+          /korean|한국/i.test(v.name || "")
+      );
+
+      if (koVoices.length > 0) {
+        // 1. Prioritize Google 한국의 / Google Korean
+        const googleKorean =
+          koVoices.find((v) => (v.name || "").includes("Google 한국의")) ||
+          koVoices.find((v) => /google/i.test(v.name || ""));
+
+        if (googleKorean) {
+          selectedKoreanVoice = googleKorean;
+          updateVoiceModeIndicator();
+          return;
+        }
+
+        // 2. Fallback to natural native voices (Yuna, SunHi, Sora, etc.)
+        const preferredKeywords = ["standard-a", "yuna", "sunhi", "sora", "natural", "neural", "ko-kr"];
+        koVoices.sort((a, b) => {
+          const aId = `${a.name} ${a.voiceURI}`.toLowerCase();
+          const bId = `${b.name} ${b.voiceURI}`.toLowerCase();
+          const aScore = preferredKeywords.findIndex((kw) => aId.includes(kw));
+          const bScore = preferredKeywords.findIndex((kw) => bId.includes(kw));
+          return (aScore === -1 ? 99 : aScore) - (bScore === -1 ? 99 : bScore);
+        });
+        selectedKoreanVoice = koVoices[0];
+        updateVoiceModeIndicator();
+      }
+    }
+
+    if ("speechSynthesis" in window) {
+      loadKoreanVoices();
+      window.speechSynthesis.onvoiceschanged = loadKoreanVoices;
+    }
+
+    function setVoiceSpeed(rate) {
+      voiceRate = rate;
+      const slowBtn = document.getElementById("speedSlowBtn");
+      const normalBtn = document.getElementById("speedNormalBtn");
+      if (rate < 0.85) {
+        slowBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950";
+        normalBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800";
+      } else {
+        normalBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition bg-amber-300 text-amber-950";
+        slowBtn.className = "px-2.5 py-0.5 rounded-full text-xs font-bold transition text-slate-500 hover:text-slate-800";
+      }
+      showToast(rate < 0.85 ? "🐢 Slow & clear teacher voice!" : "🐰 Natural speed teacher voice!");
+    }
+
+    function clearButtonPulse(btn) {
+      if (activePulseTimer) {
+        clearTimeout(activePulseTimer);
+        activePulseTimer = null;
+      }
+      document.querySelectorAll(".speaking-pulse").forEach((el) => el.classList.remove("speaking-pulse"));
+      if (btn) btn.classList.remove("speaking-pulse");
+    }
+
+    function startButtonPulse(btn, estimatedMs) {
+      clearButtonPulse(btn);
+      if (btn) {
+        btn.classList.add("speaking-pulse");
+        activePulseTimer = setTimeout(() => {
+          btn.classList.remove("speaking-pulse");
+        }, estimatedMs);
+      }
+    }
+
+    // Play inline base64 MP3 data URI from Google Cloud TTS (bypasses external media CSP)
+    async function speakViaGoogleCloudBase64(koreanText, apiKey, btn) {
+      const cacheKey = `${voiceRate}|${koreanText}`;
+      let audioDataUrl = cloudTtsAudioCache.get(cacheKey);
+
+      if (!audioDataUrl) {
+        const response = await fetch(
+          `https://texttospeech.googleapis.com/v1/text:synthesize?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              input: { text: koreanText },
+              voice: {
+                languageCode: "ko-KR",
+                name: "ko-KR-Standard-A"
+              },
+              audioConfig: {
+                audioEncoding: "MP3",
+                speakingRate: voiceRate
+              }
+            })
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Google Cloud TTS HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (!data.audioContent) {
+          throw new Error("Empty audioContent");
+        }
+
+        audioDataUrl = `data:audio/mp3;base64,${data.audioContent}`;
+        cloudTtsAudioCache.set(cacheKey, audioDataUrl);
+      }
+
+      if (activeHtmlAudio) {
+        try {
+          activeHtmlAudio.pause();
+        } catch (e) {}
+      }
+
+      const audio = new Audio(audioDataUrl);
+      activeHtmlAudio = audio;
+      startButtonPulse(btn, Math.max(2200, koreanText.length * 320));
+      audio.onended = () => clearButtonPulse(btn);
+      audio.onerror = () => clearButtonPulse(btn);
+      await audio.play();
+    }
+
+    // Main click handler: calls window.speechSynthesis.speak() SYNCHRONOUSLY inside user gesture
+    function speakKoreanText(koreanText, triggerBtnId) {
+      const btn = triggerBtnId ? document.getElementById(triggerBtnId) : null;
+      const estimatedDurationMs = Math.max(2000, koreanText.length * 300);
+
+      // Stop any active HTML5 MP3 audio
+      if (activeHtmlAudio) {
+        try {
+          activeHtmlAudio.pause();
+          activeHtmlAudio.currentTime = 0;
+        } catch (e) {}
+        activeHtmlAudio = null;
+      }
+
+      // If teacher configured a Google Cloud TTS API Key, play inline base64 MP3
+      const apiKey = getActiveGoogleCloudApiKey();
+      if (apiKey) {
+        startButtonPulse(btn, estimatedDurationMs);
+        speakViaGoogleCloudBase64(koreanText, apiKey, btn).catch(() => {
+          clearButtonPulse(btn);
+          showToast("⚠️ Google Cloud TTS key error — check Voice Settings!");
+        });
+        return;
+      }
+
+      // Synchronous Web Speech API (must run directly inside click handler with NO await before speak!)
+      if (!("speechSynthesis" in window)) {
+        showToast("🔇 Speech audio is blocked by this browser or iframe policy.");
+        return;
+      }
+
+      loadKoreanVoices();
+
+      // Only cancel if actively speaking/pending (calling cancel() when idle causes Chrome to swallow online Google voices!)
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        window.speechSynthesis.cancel();
+      }
+      // Unstick Chrome's paused speech queue if stuck
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+
+      // Keep utterance reference on window to prevent Chromium garbage-collection mid-speech
+      const utterance = new SpeechSynthesisUtterance(koreanText);
+      window._activeKoreanUtterance = utterance;
+      utterance.lang = "ko-KR";
+      if (selectedKoreanVoice) {
+        utterance.voice = selectedKoreanVoice;
+      }
+      utterance.rate = voiceRate;
+      utterance.pitch = 1.04;
+      utterance.volume = 1.0;
+
+      startButtonPulse(btn, estimatedDurationMs);
+
+      utterance.onend = () => {
+        clearButtonPulse(btn);
+      };
+      utterance.onerror = (event) => {
+        clearButtonPulse(btn);
+        if (event && event.error === "not-allowed") {
+          showToast("🔇 Audio blocked by iframe permissions policy — open in a new tab or add API key in Voice Settings.");
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+      window.speechSynthesis.resume();
+    }
+
+    // Rule-based 외래어 표기법 Phonetic Fallback for unlisted English names
+    function ruleBasedLoanwordKorean(word) {
+      let w = word.toLowerCase().replace(/[^a-z]/g, '');
+      if (!w) return '';
+
+      // Handle silent trailing 'e' on multi-letter words (e.g. "blake" -> "blak", "kate" -> "kat")
+      const hadSilentE = w.length > 2 && w.endsWith('e') && !/[aeiou]e$/.test(w) && !w.endsWith('le');
+      if (hadSilentE) {
+        w = w.slice(0, -1);
+      }
+
+      // Normalize common English spelling patterns to phonetic tokens
+      w = w
+        .replace(/tion/g, 'shun')
+        .replace(/sion/g, 'zhun')
+        .replace(/ph/g, 'f')
+        .replace(/ck/g, 'k')
+        .replace(/qu/g, 'kw')
+        .replace(/sh/g, 'S')
+        .replace(/ch/g, 'C')
+        .replace(/th/g, 'T')
+        .replace(/ng/g, 'N')
+        .replace(/ee|ea/g, 'ii')
+        .replace(/oo/g, 'uu')
+        .replace(/ou|ow/g, 'au')
+        .replace(/ai|ay/g, 'ei')
+        .replace(/oa/g, 'ou')
+        .replace(/c(?=[eiy])/g, 's')
+        .replace(/c/g, 'k')
+        .replace(/g(?=[eiy])/g, 'j')
+        .replace(/x/g, 'ks')
+        .replace(/y(?=[aeiou])/g, 'Y')
+        .replace(/y/g, 'i');
+
+      const isVowel = (ch) => 'aeiou'.includes(ch);
+      const tokens = [];
+      let i = 0;
+
+      while (i < w.length) {
+        const ch = w[i];
+        const next = w[i + 1] || '';
+
+        // Digraph vowels
+        if (ch === 'i' && next === 'i') { tokens.push({ type: 'V', val: 'ㅣ' }); i += 2; continue; }
+        if (ch === 'u' && next === 'u') { tokens.push({ type: 'V', val: 'ㅜ' }); i += 2; continue; }
+        if (ch === 'a' && next === 'u') { tokens.push({ type: 'V', val: 'ㅏ' }); tokens.push({ type: 'V', val: '우' }); i += 2; continue; }
+        if (ch === 'e' && next === 'i') { tokens.push({ type: 'V', val: 'ㅔ' }); tokens.push({ type: 'V', val: '이' }); i += 2; continue; }
+        if (ch === 'o' && next === 'u') { tokens.push({ type: 'V', val: 'ㅗ' }); tokens.push({ type: 'V', val: '우' }); i += 2; continue; }
+
+        // Y + Vowel glides (야, 여, 요, 유, 예)
+        if (ch === 'Y' && isVowel(next)) {
+          const yMap = { a: 'ㅑ', e: 'ㅖ', i: 'ㅣ', o: 'ㅛ', u: 'ㅠ' };
+          tokens.push({ type: 'V', val: yMap[next] || 'ㅣ' });
+          i += 2;
+          continue;
+        }
+
+        // Single vowels
+        if (isVowel(ch)) {
+          const vMap = {
+            a: hadSilentE && i === w.length - 2 ? 'ㅔ' : 'ㅏ',
+            e: 'ㅔ',
+            i: hadSilentE && i === w.length - 2 ? 'ㅏ' : 'ㅣ',
+            o: 'ㅗ',
+            u: 'ㅓ'
+          };
+          tokens.push({ type: 'V', val: vMap[ch] });
+          if (hadSilentE && ch === 'i' && i === w.length - 2) {
+            tokens.push({ type: 'V', val: '이' });
+          }
+          i += 1;
+          continue;
+        }
+
+        // Intervocalic 'l' -> ㄹ 받침 + ㄹ 초성 per 외래어 표기법 (e.g., "eli" -> 엘리)
+        if (ch === 'l' && i > 0 && isVowel(w[i - 1]) && isVowel(next)) {
+          tokens.push({ type: 'LL', val: 'ㄹ' });
+          i += 1;
+          continue;
+        }
+
+        // Collapse double identical consonants (e.g., "tt" -> "t")
+        if (ch === next && !isVowel(ch)) {
+          i += 1;
+          continue;
+        }
+
+        const cMap = {
+          b: 'ㅂ', d: 'ㄷ', f: 'ㅍ', g: 'ㄱ', h: 'ㅎ', j: 'ㅈ',
+          k: 'ㅋ', l: 'ㄹ', m: 'ㅁ', n: 'ㄴ', p: 'ㅍ', r: 'ㄹ',
+          s: 'ㅅ', t: 'ㅌ', v: 'ㅂ', w: '우', z: 'ㅈ',
+          S: 'ㅅ', C: 'ㅊ', T: 'ㅅ', N: 'ㅇ'
+        };
+        tokens.push({ type: 'C', raw: ch, val: cMap[ch] || 'ㅇ' });
+        i += 1;
+      }
+
+      // Assemble tokens into Korean Hangul blocks
+      let result = '';
+      let idx = 0;
+      while (idx < tokens.length) {
+        const cur = tokens[idx];
+        const nxt = tokens[idx + 1];
+
+        if (cur.type === 'V') {
+          if (cur.val.length === 1 && ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅛ','ㅜ','ㅠ','ㅡ','ㅣ'].includes(cur.val)) {
+            // Check if next consonant can attach as batchim (받침)
+            const cAfter = tokens[idx + 1];
+            const vAfter = tokens[idx + 2];
+            if (cAfter && cAfter.type === 'C' && (!vAfter || vAfter.type !== 'V') && ['n','m','l','N','k','p','t'].includes(cAfter.raw)) {
+              const batchimMap = { n: 'ㄴ', m: 'ㅁ', l: 'ㄹ', N: 'ㅇ', k: 'ㄱ', p: 'ㅂ', t: 'ㅅ' };
+              result += composeHangul('ㅇ', cur.val, batchimMap[cAfter.raw]);
+              idx += 2;
+              continue;
+            }
+            result += composeHangul('ㅇ', cur.val);
+          } else {
+            result += cur.val;
+          }
+          idx += 1;
+        } else if (cur.type === 'C') {
+          // Special 'sh' before i/e/u -> 시/셰/슈
+          if (cur.raw === 'S') {
+            if (nxt && nxt.type === 'V') {
+              const shMap = { 'ㅣ': '시', 'ㅔ': '셰', 'ㅏ': '샤', 'ㅓ': '셔', 'ㅗ': '쇼', 'ㅜ': '슈' };
+              result += shMap[nxt.val] || ('시' + composeHangul('ㅇ', nxt.val));
+              idx += 2;
+              continue;
+            } else {
+              result += '시';
+              idx += 1;
+              continue;
+            }
+          }
+
+          if (nxt && nxt.type === 'V' && nxt.val.length === 1) {
+            // Check for batchim after CV
+            const cAfter = tokens[idx + 2];
+            const vAfter = tokens[idx + 3];
+            if (cAfter && cAfter.type === 'LL' && vAfter && vAfter.type === 'V') {
+              result += composeHangul(cur.val, nxt.val, 'ㄹ');
+              tokens[idx + 2] = { type: 'C', raw: 'l', val: 'ㄹ' };
+              idx += 2;
+              continue;
+            }
+            if (cAfter && cAfter.type === 'C' && (!vAfter || vAfter.type !== 'V') && ['n','m','l','N','k','p','t'].includes(cAfter.raw)) {
+              // Following 외래어 표기법: voiceless stop after short vowel before consonant/end -> ㄱ/ㅂ/ㅅ batchim
+              const batchimMap = { n: 'ㄴ', m: 'ㅁ', l: 'ㄹ', N: 'ㅇ', k: 'ㄱ', p: 'ㅂ', t: 'ㅅ' };
+              result += composeHangul(cur.val, nxt.val, batchimMap[cAfter.raw]);
+              idx += 3;
+              continue;
+            }
+            result += composeHangul(cur.val, nxt.val);
+            idx += 2;
+          } else {
+            // Trailing or cluster consonant takes default epenthetic vowel 'ㅡ' (or 'ㅣ' for ㅈ/ㅊ)
+            const defaultVowel = (cur.val === 'ㅈ' || cur.val === 'ㅊ') ? 'ㅣ' : 'ㅡ';
+            result += composeHangul(cur.val, defaultVowel);
+            idx += 1;
+          }
+        } else {
+          idx += 1;
+        }
+      }
+
+      return result || '친구';
+    }
+
+    function convertNameToKorean(rawInput) {
+      const cleaned = (rawInput || '').trim();
+      if (!cleaned) return '친구';
+
+      // If input already contains Korean Hangul syllables, preserve them cleanly!
+      if (/[\uAC00-\uD7A3]/.test(cleaned)) {
+        return cleaned.replace(/[^\uAC00-\uD7A3\s]/g, '').trim() || '친구';
+      }
+
+      // Split multi-part names (e.g., "Anna Marie") and convert each part
+      const parts = cleaned.split(/\s+/).filter(Boolean);
+      const convertedParts = parts.map((part) => {
+        const key = part.toLowerCase().replace(/[^a-z]/g, '');
+        if (LOANWORD_NAME_DICT[key]) {
+          return LOANWORD_NAME_DICT[key];
+        }
+        return ruleBasedLoanwordKorean(key);
+      });
+
+      return convertedParts.join('') || '친구';
+    }
+
+    /* =========================================================================
+       4. KOREAN GRAMMAR CHECKER: 이에요 vs 예요 (받침 유무 판별)
+       ========================================================================= */
+    function getKoreanCopulaInfo(koreanName) {
+      const chars = Array.from(koreanName.trim());
+      // Find last Hangul syllable
+      let lastSyllable = '';
+      for (let i = chars.length - 1; i >= 0; i--) {
+        const code = chars[i].charCodeAt(0);
+        if (code >= 0xAC00 && code <= 0xD7A3) {
+          lastSyllable = chars[i];
+          break;
+        }
+      }
+
+      if (!lastSyllable) {
+        return {
+          ending: '예요',
+          hasBatchim: false,
+          badgeText: 'Ends with a vowel → 예요!',
+          romEnding: 'yeyo'
+        };
+      }
+
+      const code = lastSyllable.charCodeAt(0);
+      const jongseongIndex = (code - 0xAC00) % 28;
+      const hasBatchim = jongseongIndex !== 0;
+
+      return hasBatchim
+        ? {
+            ending: '이에요',
+            hasBatchim: true,
+            badgeText: `Ends with a consonant (${JONGSEONG_LIST[jongseongIndex]} 받침) → 이에요!`,
+            romEnding: 'ieyo'
+          }
+        : {
+            ending: '예요',
+            hasBatchim: false,
+            badgeText: 'Ends with a vowel (받침 없음) → 예요!',
+            romEnding: 'yeyo'
+          };
+    }
+
+    /* =========================================================================
+       5. APPLICATION STATE & UI SYNCHRONIZATION
+       ========================================================================= */
+    let currentState = {
+      rawName: 'Emma',
+      koreanName: '엠마',
+      manualOverride: false,
+      country: COUNTRIES[0] // United States default
+    };
+
+    function updateAllOutputs() {
+      if (!currentState.manualOverride) {
+        currentState.koreanName = convertNameToKorean(currentState.rawName);
+      }
+      const kName = currentState.koreanName || '친구';
+      const country = currentState.country;
+      const copula = getKoreanCopulaInfo(kName);
+      const displayEnName = currentState.rawName.trim() || 'Friend';
+
+      // 1. Update Sentence 1
+      document.getElementById('particleRuleBadge').textContent = copula.badgeText;
+      document.getElementById('sentence1Korean').innerHTML =
+        `저는 <span class="text-pink-600 underline decoration-wavy decoration-pink-300 underline-offset-4">${escapeHtml(kName)}</span><span class="text-purple-600">${copula.ending}</span>.`;
+      document.getElementById('sentence1Sub').innerHTML =
+        `<span class="text-pink-600">Jeoneun ${escapeHtml(displayEnName)}-${copula.romEnding}.</span> — "I am ${escapeHtml(displayEnName)}."`;
+
+      // 2. Update Sentence 2
+      document.getElementById('sentence2Korean').innerHTML =
+        `저는 <span class="text-sky-600 underline decoration-wavy decoration-sky-300 underline-offset-4">${country.ko}</span> 사람이에요.`;
+      document.getElementById('sentence2Sub').innerHTML =
+        `<span class="text-sky-600">Jeoneun ${country.rom} saram-ieyo.</span> — "I am from ${country.en}."`;
+
+      // 3. Update Korean Name Display & Hangul Tracing Pad
+      document.getElementById('koreanNameDisplay').textContent = kName;
+      renderHangulTracingBoxes(kName);
+
+      // 4. Update Flag Section & Reference Image
+      document.getElementById('flagSectionEmoji').textContent = country.emoji;
+      document.getElementById('flagSectionEn').textContent = country.en;
+      document.getElementById('flagSectionKo').textContent = country.ko;
+      document.getElementById('polaroidCaption').textContent = `${country.emoji} ${country.ko} (${country.en})`;
+
+      const flagUrl = `https://flagcdn.com/w320/${country.iso}.png`;
+      const refImg = document.getElementById('referenceFlagImage');
+      const refFallback = document.getElementById('referenceFlagFallback');
+      refImg.style.display = 'block';
+      refFallback.style.display = 'none';
+      refFallback.textContent = country.emoji;
+      refImg.src = flagUrl;
+      refImg.alt = `${country.en} Flag`;
+
+      // Update Ghost Guide overlay image too
+      document.getElementById('flagGhostOverlay').src = flagUrl;
+
+      // Render Suggested Flag Color Pills
+      const colorContainer = document.getElementById('suggestedFlagColors');
+      colorContainer.innerHTML = '';
+      country.colors.forEach((hex) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm hover:scale-110 transition';
+        btn.style.backgroundColor = hex;
+        btn.title = `Use flag color ${hex}`;
+        btn.onclick = () => {
+          setFlagColor(hex, null);
+          setFlagTool('brush');
+          showToast('🎨 Flag color picked!');
+        };
+        colorContainer.appendChild(btn);
+      });
+    }
+
+    // Speech Trigger Helpers
+    function speakSentence1() {
+      const copula = getKoreanCopulaInfo(currentState.koreanName);
+      speakKoreanText(`저는 ${currentState.koreanName}${copula.ending}.`, 'listenSentence1Btn');
+    }
+
+    function speakSentence2() {
+      speakKoreanText(`저는 ${currentState.country.ko} 사람이에요.`, 'listenSentence2Btn');
+    }
+
+    function speakAllSentences() {
+      const copula = getKoreanCopulaInfo(currentState.koreanName);
+      speakKoreanText(`저는 ${currentState.koreanName}${copula.ending}. 저는 ${currentState.country.ko} 사람이에요.`, 'listenAllBtn');
+    }
+
+    function speakKoreanName() {
+      speakKoreanText(currentState.koreanName, 'listenNameBtn');
+    }
+
+    function speakCountryName() {
+      speakKoreanText(currentState.country.ko, 'listenCountryBtn');
+    }
+
+    // Input Event Handlers
+    document.getElementById('studentNameInput').addEventListener('input', (e) => {
+      currentState.rawName = e.target.value;
+      currentState.manualOverride = false;
+      updateAllOutputs();
+    });
+
+    function setSampleName(name) {
+      const input = document.getElementById('studentNameInput');
+      input.value = name;
+      currentState.rawName = name;
+      currentState.manualOverride = false;
+      updateAllOutputs();
+      speakSentence1();
+    }
+
+    function clearNameInput() {
+      const input = document.getElementById('studentNameInput');
+      input.value = '';
+      input.focus();
+      currentState.rawName = '';
+      currentState.manualOverride = false;
+      updateAllOutputs();
+    }
+
+    function toggleManualKoreanEdit() {
+      const box = document.getElementById('manualKoreanEditBox');
+      const input = document.getElementById('manualKoreanInput');
+      box.classList.toggle('hidden');
+      if (!box.classList.contains('hidden')) {
+        input.value = currentState.koreanName;
+        input.focus();
+      }
+    }
+
+    function applyManualKoreanName(val) {
+      const clean = val.trim();
+      if (clean) {
+        currentState.manualOverride = true;
+        currentState.koreanName = clean;
+        updateAllOutputs();
+      }
+    }
+
+    function resetAutoKoreanName() {
+      currentState.manualOverride = false;
+      updateAllOutputs();
+      document.getElementById('manualKoreanInput').value = currentState.koreanName;
+    }
+
+    /* =========================================================================
+       6. CUSTOM RICH COUNTRY DROPDOWN (FLAG ICON + EN + KO)
+       ========================================================================= */
+    function renderCountryOptions(filterText = '') {
+      const list = document.getElementById('countryOptionsList');
+      const q = filterText.trim().toLowerCase();
+      list.innerHTML = '';
+
+      const filtered = COUNTRIES.filter((c) =>
+        c.en.toLowerCase().includes(q) || c.ko.includes(q) || c.rom.toLowerCase().includes(q)
+      );
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<li class="p-4 text-center text-sm font-bold text-slate-400">No matching country found 🌎</li>`;
+        return;
+      }
+
+      filtered.forEach((country) => {
+        const isSelected = country.iso === currentState.country.iso;
+        const li = document.createElement('li');
+        li.role = 'option';
+        li.ariaSelected = isSelected;
+        li.className = `flex items-center justify-between px-4 py-2.5 cursor-pointer transition ${
+          isSelected ? 'bg-sky-100/90 font-bold' : 'hover:bg-pink-50'
+        }`;
+
+        li.innerHTML = `
+          <div class="flex items-center gap-3">
+            <img src="https://flagcdn.com/w40/${country.iso}.png" alt="${country.en} flag" class="w-7 h-5 object-cover rounded shadow-xs border border-slate-200 shrink-0" />
+            <span class="font-display text-base text-slate-800">${country.en}</span>
+          </div>
+          <span class="font-korean text-base text-sky-600 bg-white px-2.5 py-0.5 rounded-full border border-sky-200">${country.ko}</span>
+        `;
+
+        li.onclick = () => selectCountry(country);
+        list.appendChild(li);
+      });
+    }
+
+    function toggleCountryDropdown() {
+      const menu = document.getElementById('countryDropdownMenu');
+      const chevron = document.getElementById('dropdownChevron');
+      const btn = document.getElementById('countryDropdownBtn');
+      const isHidden = menu.classList.contains('hidden');
+
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+        btn.setAttribute('aria-expanded', 'true');
+        const searchInput = document.getElementById('countrySearchInput');
+        searchInput.value = '';
+        renderCountryOptions('');
+        setTimeout(() => searchInput.focus(), 50);
+      } else {
+        closeCountryDropdown();
+      }
+    }
+
+    function closeCountryDropdown() {
+      const menu = document.getElementById('countryDropdownMenu');
+      const chevron = document.getElementById('dropdownChevron');
+      const btn = document.getElementById('countryDropdownBtn');
+      menu.classList.add('hidden');
+      chevron.style.transform = 'rotate(0deg)';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function filterCountries(val) {
+      renderCountryOptions(val);
+    }
+
+    function selectCountry(country) {
+      currentState.country = country;
+      document.getElementById('selectedFlagImg').src = `https://flagcdn.com/w80/${country.iso}.png`;
+      document.getElementById('selectedCountryEn').textContent = country.en;
+      document.getElementById('selectedCountryKo').textContent = country.ko;
+      closeCountryDropdown();
+      updateAllOutputs();
+      speakCountryName();
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('countryDropdownWrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeCountryDropdown();
+      }
+    });
+
+    /* =========================================================================
+       7. HANGUL GRID TRACING PAD (원고지 / 한글 따라 쓰기 CANVAS ENGINE)
+       ========================================================================= */
+    let activeTraceColor = '#FF4D6D';
+    let hangulCanvases = [];
+
+    function setTraceColor(hex, btnEl) {
+      activeTraceColor = hex;
+      document.querySelectorAll('.trace-swatch').forEach((el) => {
+        el.classList.remove('ring-4', 'ring-pink-200', 'scale-110');
+      });
+      if (btnEl) {
+        btnEl.classList.add('ring-4', 'ring-pink-200', 'scale-110');
+      }
+    }
+
+    function renderHangulTracingBoxes(koreanName) {
+      const container = document.getElementById('hangulGridContainer');
+      container.innerHTML = '';
+      hangulCanvases = [];
+
+      const syllables = Array.from(koreanName.replace(/\s+/g, '')).slice(0, 8);
+      if (syllables.length === 0) return;
+
+      syllables.forEach((char, index) => {
+        const card = document.createElement('div');
+        card.className = 'flex flex-col items-center';
+
+        // Syllable number tag
+        const label = document.createElement('span');
+        label.className = 'text-xs font-extrabold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1.5';
+        label.textContent = `${index + 1}번째 글자`;
+
+        // Grid Box Wrapper
+        const box = document.createElement('div');
+        box.className = 'relative w-36 h-36 sm:w-44 sm:h-44 bg-white rounded-2xl border-4 border-pink-300 shadow-md overflow-hidden';
+
+        const canvas = document.createElement('canvas');
+        const dpr = window.devicePixelRatio || 1;
+        const cssSize = 176;
+        canvas.width = cssSize * dpr;
+        canvas.height = cssSize * dpr;
+        canvas.className = 'drawing-surface w-full h-full block';
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        drawHangulGridBackground(ctx, cssSize, char);
+        attachCanvasDrawingEvents(canvas, ctx, () => ({
+          color: activeTraceColor,
+          lineWidth: 9,
+          isEraser: false
+        }));
+
+        // Small individual box reset button
+        const clearSingleBtn = document.createElement('button');
+        clearSingleBtn.type = 'button';
+        clearSingleBtn.title = 'Erase this box';
+        clearSingleBtn.className = 'mt-1.5 text-xs font-bold text-slate-400 hover:text-pink-600 transition';
+        clearSingleBtn.textContent = '↺ Redo box';
+        clearSingleBtn.onclick = () => {
+          ctx.clearRect(0, 0, cssSize, cssSize);
+          drawHangulGridBackground(ctx, cssSize, char);
+        };
+
+        box.appendChild(canvas);
+        card.appendChild(label);
+        card.appendChild(box);
+        card.appendChild(clearSingleBtn);
+        container.appendChild(card);
+
+        hangulCanvases.push({ canvas, ctx, size: cssSize, char });
+      });
+    }
+
+    function drawHangulGridBackground(ctx, size, char) {
+      ctx.save();
+      // White base
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, size, size);
+
+      // Dashed pink/red Hangul practice crosshairs (+)
+      ctx.strokeStyle = '#FECDD3';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 6]);
+
+      ctx.beginPath();
+      ctx.moveTo(size / 2, 8);
+      ctx.lineTo(size / 2, size - 8);
+      ctx.moveTo(8, size / 2);
+      ctx.lineTo(size - 8, size / 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Faint traceable Hangul syllable guide
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = `700 ${Math.floor(size * 0.72)}px "Noto Sans KR", "Jua", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(char, size / 2, size / 2 + 5);
+
+      // Subtle dashed outline around glyph
+      ctx.strokeStyle = '#CBD5E1';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([3, 3]);
+      ctx.strokeText(char, size / 2, size / 2 + 5);
+      ctx.restore();
+    }
+
+    function clearAllHangulGrids() {
+      hangulCanvases.forEach(({ ctx, size, char }) => {
+        ctx.clearRect(0, 0, size, size);
+        drawHangulGridBackground(ctx, size, char);
+      });
+      showToast('🧹 Hangul tracing grid cleared!');
+    }
+
+    function celebrateTracing(e) {
+      spawnConfettiBurst(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
+      speakKoreanName();
+      showToast(`🌟 Awesome job writing ${currentState.koreanName}!`);
+    }
+
+    /* =========================================================================
+       8. COUNTRY FLAG FREE DRAWING PAD (BRUSH, FILL BUCKET, ERASER, SAVE)
+       ========================================================================= */
+    let flagColor = '#EF233C';
+    let flagTool = 'brush'; // 'brush' | 'marker' | 'fill' | 'eraser'
+    let flagCanvas, flagCtx;
+
+    function initFlagDrawingPad() {
+      flagCanvas = document.getElementById('flagDrawingCanvas');
+      flagCtx = flagCanvas.getContext('2d', { willReadFrequently: true });
+
+      resizeFlagCanvas(false);
+      window.addEventListener('resize', () => resizeFlagCanvas(true));
+
+      // Custom pointer handling supporting both stroke drawing & flood fill bucket
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      function getCoords(e) {
+        const rect = flagCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const scaleX = flagCanvas.width / rect.width;
+        const scaleY = flagCanvas.height / rect.height;
+        return {
+          x: (clientX - rect.left) * scaleX,
+          y: (clientY - rect.top) * scaleY
+        };
+      }
+
+      function handleStart(e) {
+        e.preventDefault();
+        const { x, y } = getCoords(e);
+
+        if (flagTool === 'fill') {
+          floodFillCanvas(Math.floor(x), Math.floor(y), flagColor);
+          return;
+        }
+
+        isDrawing = true;
+        lastX = x;
+        lastY = y;
+
+        flagCtx.beginPath();
+        flagCtx.arc(x, y, getFlagBrushWidth() / 2, 0, Math.PI * 2);
+        flagCtx.fillStyle = flagTool === 'eraser' ? '#FFFFFF' : flagColor;
+        flagCtx.fill();
+      }
+
+      function handleMove(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const { x, y } = getCoords(e);
+
+        flagCtx.beginPath();
+        flagCtx.moveTo(lastX, lastY);
+        flagCtx.lineTo(x, y);
+        flagCtx.strokeStyle = flagTool === 'eraser' ? '#FFFFFF' : flagColor;
+        flagCtx.lineWidth = getFlagBrushWidth();
+        flagCtx.lineCap = 'round';
+        flagCtx.lineJoin = 'round';
+        flagCtx.stroke();
+
+        lastX = x;
+        lastY = y;
+      }
+
+      function handleEnd() {
+        isDrawing = false;
+      }
+
+      flagCanvas.addEventListener('mousedown', handleStart);
+      flagCanvas.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleEnd);
+
+      flagCanvas.addEventListener('touchstart', handleStart, { passive: false });
+      flagCanvas.addEventListener('touchmove', handleMove, { passive: false });
+      flagCanvas.addEventListener('touchend', handleEnd);
+    }
+
+    function getFlagBrushWidth() {
+      if (flagTool === 'eraser') return 26;
+      if (flagTool === 'marker') return 18;
+      return 7;
+    }
+
+    function resizeFlagCanvas(preserveArt) {
+      const wrapper = document.getElementById('flagCanvasWrapper');
+      if (!wrapper || !flagCanvas) return;
+
+      let snapshot = null;
+      if (preserveArt && flagCanvas.width > 0 && flagCanvas.height > 0) {
+        snapshot = document.createElement('canvas');
+        snapshot.width = flagCanvas.width;
+        snapshot.height = flagCanvas.height;
+        snapshot.getContext('2d').drawImage(flagCanvas, 0, 0);
+      }
+
+      const rect = wrapper.getBoundingClientRect();
+      const w = Math.max(300, Math.floor(rect.width));
+      const h = Math.max(200, Math.floor(w * (2 / 3)));
+
+      flagCanvas.width = w;
+      flagCanvas.height = h;
+
+      flagCtx.fillStyle = '#FFFFFF';
+      flagCtx.fillRect(0, 0, w, h);
+
+      if (snapshot) {
+        flagCtx.drawImage(snapshot, 0, 0, w, h);
+      }
+    }
+
+    function setFlagColor(hex, btnEl) {
+      flagColor = hex;
+      if (flagTool === 'eraser') setFlagTool('brush');
+      document.querySelectorAll('.flag-swatch').forEach((el) => {
+        el.classList.remove('ring-4', 'ring-slate-300', 'scale-110');
+      });
+      if (btnEl) {
+        btnEl.classList.add('ring-4', 'ring-slate-300', 'scale-110');
+      }
+    }
+
+    function setFlagTool(tool) {
+      flagTool = tool;
+      const buttons = {
+        brush: document.getElementById('toolBrushBtn'),
+        marker: document.getElementById('toolMarkerBtn'),
+        fill: document.getElementById('toolFillBtn'),
+        eraser: document.getElementById('toolEraserBtn')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (key === tool) {
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-500 text-white shadow-sm transition';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition';
+        }
+      });
+
+      flagCanvas.style.cursor = tool === 'fill' ? 'cell' : 'crosshair';
+    }
+
+    function toggleFlagGhostGuide() {
+      const checked = document.getElementById('flagGhostToggle').checked;
+      const overlay = document.getElementById('flagGhostOverlay');
+      if (checked) {
+        overlay.classList.remove('hidden');
+      } else {
+        overlay.classList.add('hidden');
+      }
+    }
+
+    function clearFlagCanvas() {
+      flagCtx.fillStyle = '#FFFFFF';
+      flagCtx.fillRect(0, 0, flagCanvas.width, flagCanvas.height);
+      showToast('🗑️ Flag canvas cleared!');
+    }
+
+    function downloadFlagArt(e) {
+      const link = document.createElement('a');
+      link.download = `my-${currentState.country.iso}-flag.png`;
+      link.href = flagCanvas.toDataURL('image/png');
+      link.click();
+      spawnConfettiBurst(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
+      showToast(`🖼️ Saved your ${currentState.country.en} flag drawing!`);
+    }
+
+    // Fast Scanline Flood Fill for Paint Bucket Tool
+    function floodFillCanvas(startX, startY, fillHex) {
+      const w = flagCanvas.width;
+      const h = flagCanvas.height;
+      if (startX < 0 || startX >= w || startY < 0 || startY >= h) return;
+
+      const imgData = flagCtx.getImageData(0, 0, w, h);
+      const data = imgData.data;
+
+      const targetIdx = (startY * w + startX) * 4;
+      const tR = data[targetIdx];
+      const tG = data[targetIdx + 1];
+      const tB = data[targetIdx + 2];
+
+      const fR = parseInt(fillHex.slice(1, 3), 16);
+      const fG = parseInt(fillHex.slice(3, 5), 16);
+      const fB = parseInt(fillHex.slice(5, 7), 16);
+
+      if (Math.abs(tR - fR) < 10 && Math.abs(tG - fG) < 10 && Math.abs(tB - fB) < 10) return;
+
+      const tolerance = 35;
+      const visited = new Uint8Array(w * h);
+      const stack = [[startX, startY]];
+
+      while (stack.length > 0) {
+        const [x, y] = stack.pop();
+        if (x < 0 || x >= w || y < 0 || y >= h) continue;
+        const pos = y * w + x;
+        if (visited[pos]) continue;
+
+        const idx = pos * 4;
+        if (
+          Math.abs(data[idx] - tR) <= tolerance &&
+          Math.abs(data[idx + 1] - tG) <= tolerance &&
+          Math.abs(data[idx + 2] - tB) <= tolerance
+        ) {
+          visited[pos] = 1;
+          data[idx] = fR;
+          data[idx + 1] = fG;
+          data[idx + 2] = fB;
+          data[idx + 3] = 255;
+
+          stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+        }
+      }
+
+      flagCtx.putImageData(imgData, 0, 0);
+    }
+
+    /* =========================================================================
+       9. SHARED POINTER DRAWING HELPER & CUTE UI UTILITIES
+       ========================================================================= */
+    function attachCanvasDrawingEvents(canvas, ctx, getStyle) {
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+
+      function start(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        const style = getStyle();
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, style.lineWidth / 2, 0, Math.PI * 2);
+        ctx.fillStyle = style.color;
+        ctx.fill();
+      }
+
+      function move(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        const style = getStyle();
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.strokeStyle = style.color;
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function end() {
+        drawing = false;
+      }
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', end);
+
+      canvas.addEventListener('touchstart', start, { passive: false });
+      canvas.addEventListener('touchmove', move, { passive: false });
+      canvas.addEventListener('touchend', end);
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('cuteToast');
+      const textEl = document.getElementById('cuteToastText');
+      textEl.textContent = msg;
+      toast.classList.remove('opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0');
+      }, 2400);
+    }
+
+    function spawnConfettiBurst(originX, originY) {
+      const icons = ['⭐', '💖', '✨', '🎉', '🌸', '🇰🇷', '🐰'];
+      for (let i = 0; i < 16; i++) {
+        const el = document.createElement('span');
+        el.className = 'confetti-piece';
+        el.textContent = icons[i % icons.length];
+        el.style.left = `${originX}px`;
+        el.style.top = `${originY}px`;
+        const angle = (Math.PI * 2 * i) / 16 + (Math.random() - 0.5) * 0.4;
+        const dist = 70 + Math.random() * 110;
+        el.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+        el.style.setProperty('--dy', `${Math.sin(angle) * dist - 40}px`);
+        el.style.setProperty('--rot', `${(Math.random() - 0.5) * 360}deg`);
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1650);
+      }
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Initialize Application on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadKoreanVoices();
+      updateVoiceModeIndicator();
+      renderCountryOptions('');
+      initFlagDrawingPad();
+      updateAllOutputs();
+    });
+  </script>
+</body>
+</html>
